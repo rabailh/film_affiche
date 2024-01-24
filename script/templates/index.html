@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Films à l'Affiche</title>
+  </head>
+  <body>
+    <h1>Films à l'Affiche</h1>
+    <div style="display: flex; flex-wrap: wrap">
+      {% for film in films %}
+      <h1>{{film}}</h1>
+      <div
+        style="
+          border: 1px solid #ddd;
+          padding: 10px;
+          margin: 10px;
+          width: 300px;
+        "
+      >
+        <h2>{{ film['title'] }}</h2>
+        <p><strong>Date de sortie:</strong> {{ film['release_date'] }}</p>
+        <p><strong>Vote moyen:</strong> {{ film['vote_average'] }}</p>
+        <img
+          src="{{ film['poster_path'] }}"
+          alt="{{ film['title'] }}"
+          style="max-width: 100%"
+        />
+        <p><strong>Vue d'ensemble:</strong> {{ film['overview'] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
