@@ -256,7 +256,6 @@
             <includes>
                 <include>org.talend.libraries:json-path-2.1.0:jar:6.0.0</include>
                 <include>org.example.film_affiche.code:routines:jar:8.0.1</include>
-                <include>org.talend.libraries:json_simple-1.1:jar:6.0.0</include>
             </includes>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <useProjectArtifact>false</useProjectArtifact>
@@ -268,6 +267,7 @@
                 <include>org.apache.logging.log4j:log4j-api:jar:2.13.2</include>
                 <include>com.sun.jersey:jersey-client:jar:1.19</include>
                 <include>org.apache.logging.log4j:log4j-core:jar:2.13.2</include>
+                <include>org.talend.components:talendcsv:jar:1.0.0</include>
                 <include>javax.ws.rs:jsr311-api:jar:1.1.1</include>
                 <include>net.minidev:accessors-smart:jar:2.4.7</include>
                 <include>org.apache.logging.log4j:log4j-slf4j-impl:jar:2.13.2</include>

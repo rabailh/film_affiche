@@ -284,14 +284,14 @@ public class call_api implements TalendJob {
 		}
 	}
 
-	public void tFileOutputJSON_1_error(Exception exception, String errorComponent,
+	public void tFileDelete_1_error(Exception exception, String errorComponent,
 			final java.util.Map<String, Object> globalMap) throws TalendException {
 
 		end_Hash.put(errorComponent, System.currentTimeMillis());
 
 		status = "failure";
 
-		tFileOutputJSON_1_onSubJobError(exception, errorComponent, globalMap);
+		tFileDelete_1_onSubJobError(exception, errorComponent, globalMap);
 	}
 
 	public void tREST_1_error(Exception exception, String errorComponent, final java.util.Map<String, Object> globalMap)
@@ -344,7 +344,7 @@ public class call_api implements TalendJob {
 		tREST_1_onSubJobError(exception, errorComponent, globalMap);
 	}
 
-	public void tLogRow_1_error(Exception exception, String errorComponent,
+	public void tFileOutputDelimited_1_error(Exception exception, String errorComponent,
 			final java.util.Map<String, Object> globalMap) throws TalendException {
 
 		end_Hash.put(errorComponent, System.currentTimeMillis());
@@ -354,7 +354,7 @@ public class call_api implements TalendJob {
 		tREST_1_onSubJobError(exception, errorComponent, globalMap);
 	}
 
-	public void tFileOutputJSON_1_onSubJobError(Exception exception, String errorComponent,
+	public void tFileDelete_1_onSubJobError(Exception exception, String errorComponent,
 			final java.util.Map<String, Object> globalMap) throws TalendException {
 
 		resumeUtil.addLog("SYSTEM_LOG", "NODE:" + errorComponent, "", Thread.currentThread().getId() + "", "FATAL", "",
@@ -370,8 +370,8 @@ public class call_api implements TalendJob {
 
 	}
 
-	public void tFileOutputJSON_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
-		globalMap.put("tFileOutputJSON_1_SUBPROCESS_STATE", 0);
+	public void tFileDelete_1Process(final java.util.Map<String, Object> globalMap) throws TalendException {
+		globalMap.put("tFileDelete_1_SUBPROCESS_STATE", 0);
 
 		final boolean execStat = this.execStat;
 
@@ -391,89 +391,123 @@ public class call_api implements TalendJob {
 				globalResumeTicket = true;
 
 				/**
-				 * [tFileOutputJSON_1 begin ] start
+				 * [tFileDelete_1 begin ] start
 				 */
 
-				ok_Hash.put("tFileOutputJSON_1", false);
-				start_Hash.put("tFileOutputJSON_1", System.currentTimeMillis());
+				ok_Hash.put("tFileDelete_1", false);
+				start_Hash.put("tFileDelete_1", System.currentTimeMillis());
 
-				currentComponent = "tFileOutputJSON_1";
+				currentComponent = "tFileDelete_1";
 
-				int tos_count_tFileOutputJSON_1 = 0;
+				int tos_count_tFileDelete_1 = 0;
 
-				int nb_line_tFileOutputJSON_1 = 0;
-				java.io.File file_tFileOutputJSON_1 = new java.io.File(
-						"D:/Applications/TOS_DI-8.0.1/studio/workspace/FILM/_output/film_affiche.json");
-				java.io.File dir_tFileOutputJSON_1 = file_tFileOutputJSON_1.getParentFile();
-				if (dir_tFileOutputJSON_1 != null && !dir_tFileOutputJSON_1.exists()) {
-					dir_tFileOutputJSON_1.mkdirs();
+				/**
+				 * [tFileDelete_1 begin ] stop
+				 */
+
+				/**
+				 * [tFileDelete_1 main ] start
+				 */
+
+				currentComponent = "tFileDelete_1";
+
+				class DeleteFoldertFileDelete_1 {
+					/**
+					 * delete all the sub-files in 'file'
+					 * 
+					 * @param file
+					 */
+					public boolean delete(java.io.File file) {
+						java.io.File[] files = file.listFiles();
+						for (int i = 0; i < files.length; i++) {
+							if (files[i].isFile()) {
+								files[i].delete();
+							} else if (files[i].isDirectory()) {
+								if (!files[i].delete()) {
+									delete(files[i]);
+								}
+							}
+						}
+						deleteDirectory(file);
+						return file.delete();
+					}
+
+					/**
+					 * delete all the sub-folders in 'file'
+					 * 
+					 * @param file
+					 */
+					private void deleteDirectory(java.io.File file) {
+						java.io.File[] filed = file.listFiles();
+						for (int i = 0; i < filed.length; i++) {
+							if (filed[i].isDirectory()) {
+								deleteDirectory(filed[i]);
+							}
+							filed[i].delete();
+						}
+					}
+
 				}
-				java.io.PrintWriter outtFileOutputJSON_1 = new java.io.PrintWriter(
-						new java.io.BufferedWriter(new java.io.FileWriter(
-								"D:/Applications/TOS_DI-8.0.1/studio/workspace/FILM/_output/film_affiche.json")));
-				outtFileOutputJSON_1.append("{\"" + "data" + "\":[");
-				boolean isFirst_tFileOutputJSON_1 = true;
-
-				/**
-				 * [tFileOutputJSON_1 begin ] stop
-				 */
-
-				/**
-				 * [tFileOutputJSON_1 main ] start
-				 */
-
-				currentComponent = "tFileOutputJSON_1";
-
-				org.json.simple.JSONObject jsonRowtFileOutputJSON_1 = new org.json.simple.JSONObject();
-
-				if (!isFirst_tFileOutputJSON_1) {
-					outtFileOutputJSON_1.append(",");
+				java.io.File file_tFileDelete_1 = new java.io.File(
+						"D:/Applications/TOS_DI-8.0.1/studio/workspace/FILM/_output/film_affiche.csv");
+				if (file_tFileDelete_1.exists() && file_tFileDelete_1.isFile()) {
+					if (file_tFileDelete_1.delete()) {
+						globalMap.put("tFileDelete_1_CURRENT_STATUS", "File deleted.");
+					} else {
+						globalMap.put("tFileDelete_1_CURRENT_STATUS", "No file deleted.");
+						throw new RuntimeException(
+								"File " + file_tFileDelete_1.getAbsolutePath() + " can not be deleted.");
+					}
+				} else {
+					globalMap.put("tFileDelete_1_CURRENT_STATUS", "File does not exist or is invalid.");
+					throw new RuntimeException("File " + file_tFileDelete_1.getAbsolutePath()
+							+ " does not exist or is invalid or is not a file.");
 				}
-				isFirst_tFileOutputJSON_1 = false;
-				outtFileOutputJSON_1.append(jsonRowtFileOutputJSON_1.toJSONString());
-				nb_line_tFileOutputJSON_1++;
+				globalMap.put("tFileDelete_1_DELETE_PATH",
+						"D:/Applications/TOS_DI-8.0.1/studio/workspace/FILM/_output/film_affiche.csv");
 
-				tos_count_tFileOutputJSON_1++;
+				tos_count_tFileDelete_1++;
 
 				/**
-				 * [tFileOutputJSON_1 main ] stop
+				 * [tFileDelete_1 main ] stop
 				 */
 
 				/**
-				 * [tFileOutputJSON_1 process_data_begin ] start
+				 * [tFileDelete_1 process_data_begin ] start
 				 */
 
-				currentComponent = "tFileOutputJSON_1";
+				currentComponent = "tFileDelete_1";
 
 				/**
-				 * [tFileOutputJSON_1 process_data_begin ] stop
-				 */
-
-				/**
-				 * [tFileOutputJSON_1 process_data_end ] start
-				 */
-
-				currentComponent = "tFileOutputJSON_1";
-
-				/**
-				 * [tFileOutputJSON_1 process_data_end ] stop
+				 * [tFileDelete_1 process_data_begin ] stop
 				 */
 
 				/**
-				 * [tFileOutputJSON_1 end ] start
+				 * [tFileDelete_1 process_data_end ] start
 				 */
 
-				currentComponent = "tFileOutputJSON_1";
-
-				outtFileOutputJSON_1.print("]}");
-				outtFileOutputJSON_1.close();
-				globalMap.put("tFileOutputJSON_1_NB_LINE", nb_line_tFileOutputJSON_1);
-
-				ok_Hash.put("tFileOutputJSON_1", true);
-				end_Hash.put("tFileOutputJSON_1", System.currentTimeMillis());
+				currentComponent = "tFileDelete_1";
 
 				/**
-				 * [tFileOutputJSON_1 end ] stop
+				 * [tFileDelete_1 process_data_end ] stop
+				 */
+
+				/**
+				 * [tFileDelete_1 end ] start
+				 */
+
+				currentComponent = "tFileDelete_1";
+
+				ok_Hash.put("tFileDelete_1", true);
+				end_Hash.put("tFileDelete_1", System.currentTimeMillis());
+
+				if (execStat) {
+					runStat.updateStatOnConnection("OnComponentOk1", 0, "ok");
+				}
+				tREST_1Process(globalMap);
+
+				/**
+				 * [tFileDelete_1 end ] stop
 				 */
 			} // end the resume
 
@@ -492,13 +526,13 @@ public class call_api implements TalendJob {
 			try {
 
 				/**
-				 * [tFileOutputJSON_1 finally ] start
+				 * [tFileDelete_1 finally ] start
 				 */
 
-				currentComponent = "tFileOutputJSON_1";
+				currentComponent = "tFileDelete_1";
 
 				/**
-				 * [tFileOutputJSON_1 finally ] stop
+				 * [tFileDelete_1 finally ] stop
 				 */
 			} catch (java.lang.Exception e) {
 				// ignore
@@ -508,10 +542,10 @@ public class call_api implements TalendJob {
 			resourceMap = null;
 		}
 
-		globalMap.put("tFileOutputJSON_1_SUBPROCESS_STATE", 1);
+		globalMap.put("tFileDelete_1_SUBPROCESS_STATE", 1);
 	}
 
-	public static class row3Struct implements routines.system.IPersistableRow<row3Struct> {
+	public static class film2Struct implements routines.system.IPersistableRow<film2Struct> {
 		final static byte[] commonByteArrayLock_FILM_call_api = new byte[0];
 		static byte[] commonByteArray_FILM_call_api = new byte[0];
 		protected static final int DEFAULT_HASHCODE = 1;
@@ -633,7 +667,7 @@ public class call_api implements TalendJob {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			final row3Struct other = (row3Struct) obj;
+			final film2Struct other = (film2Struct) obj;
 
 			if (this.id == null) {
 				if (other.id != null)
@@ -646,7 +680,7 @@ public class call_api implements TalendJob {
 			return true;
 		}
 
-		public void copyDataTo(row3Struct other) {
+		public void copyDataTo(film2Struct other) {
 
 			other.id = this.id;
 			other.budget = this.budget;
@@ -666,7 +700,7 @@ public class call_api implements TalendJob {
 
 		}
 
-		public void copyKeysDataTo(row3Struct other) {
+		public void copyKeysDataTo(film2Struct other) {
 
 			other.id = this.id;
 
@@ -992,7 +1026,7 @@ public class call_api implements TalendJob {
 		/**
 		 * Compare keys
 		 */
-		public int compareTo(row3Struct other) {
+		public int compareTo(film2Struct other) {
 
 			int returnValue = -1;
 
@@ -1027,7 +1061,7 @@ public class call_api implements TalendJob {
 
 	}
 
-	public static class row1Struct implements routines.system.IPersistableRow<row1Struct> {
+	public static class film1Struct implements routines.system.IPersistableRow<film1Struct> {
 		final static byte[] commonByteArrayLock_FILM_call_api = new byte[0];
 		static byte[] commonByteArray_FILM_call_api = new byte[0];
 
@@ -1236,7 +1270,7 @@ public class call_api implements TalendJob {
 		/**
 		 * Compare keys
 		 */
-		public int compareTo(row1Struct other) {
+		public int compareTo(film1Struct other) {
 
 			int returnValue = -1;
 
@@ -1266,7 +1300,7 @@ public class call_api implements TalendJob {
 
 	}
 
-	public static class row2Struct implements routines.system.IPersistableRow<row2Struct> {
+	public static class films2Struct implements routines.system.IPersistableRow<films2Struct> {
 		final static byte[] commonByteArrayLock_FILM_call_api = new byte[0];
 		static byte[] commonByteArray_FILM_call_api = new byte[0];
 		protected static final int DEFAULT_HASHCODE = 1;
@@ -1358,7 +1392,7 @@ public class call_api implements TalendJob {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			final row2Struct other = (row2Struct) obj;
+			final films2Struct other = (films2Struct) obj;
 
 			if (this.id == null) {
 				if (other.id != null)
@@ -1371,7 +1405,7 @@ public class call_api implements TalendJob {
 			return true;
 		}
 
-		public void copyDataTo(row2Struct other) {
+		public void copyDataTo(films2Struct other) {
 
 			other.id = this.id;
 			other.title = this.title;
@@ -1386,7 +1420,7 @@ public class call_api implements TalendJob {
 
 		}
 
-		public void copyKeysDataTo(row2Struct other) {
+		public void copyKeysDataTo(films2Struct other) {
 
 			other.id = this.id;
 
@@ -1687,7 +1721,7 @@ public class call_api implements TalendJob {
 		/**
 		 * Compare keys
 		 */
-		public int compareTo(row2Struct other) {
+		public int compareTo(films2Struct other) {
 
 			int returnValue = -1;
 
@@ -1722,7 +1756,7 @@ public class call_api implements TalendJob {
 
 	}
 
-	public static class appelapi1Struct implements routines.system.IPersistableRow<appelapi1Struct> {
+	public static class films1Struct implements routines.system.IPersistableRow<films1Struct> {
 		final static byte[] commonByteArrayLock_FILM_call_api = new byte[0];
 		static byte[] commonByteArray_FILM_call_api = new byte[0];
 
@@ -1931,7 +1965,7 @@ public class call_api implements TalendJob {
 		/**
 		 * Compare keys
 		 */
-		public int compareTo(appelapi1Struct other) {
+		public int compareTo(films1Struct other) {
 
 			int returnValue = -1;
 
@@ -1981,10 +2015,10 @@ public class call_api implements TalendJob {
 			if (resumeIt || globalResumeTicket) { // start the resume
 				globalResumeTicket = true;
 
-				appelapi1Struct appelapi1 = new appelapi1Struct();
-				row2Struct row2 = new row2Struct();
-				row1Struct row1 = new row1Struct();
-				row3Struct row3 = new row3Struct();
+				films1Struct films1 = new films1Struct();
+				films2Struct films2 = new films2Struct();
+				film1Struct film1 = new film1Struct();
+				film2Struct film2 = new film2Struct();
 
 				/**
 				 * [tFlowToIterate_1 begin ] start
@@ -1998,7 +2032,7 @@ public class call_api implements TalendJob {
 				currentComponent = "tFlowToIterate_1";
 
 				if (execStat) {
-					runStat.updateStatOnConnection(resourceMap, iterateId, 0, 0, "row2");
+					runStat.updateStatOnConnection(resourceMap, iterateId, 0, 0, "films2");
 				}
 
 				int tos_count_tFlowToIterate_1 = 0;
@@ -2020,7 +2054,7 @@ public class call_api implements TalendJob {
 				currentComponent = "tExtractJSONFields_1";
 
 				if (execStat) {
-					runStat.updateStatOnConnection(resourceMap, iterateId, 0, 0, "appelapi1");
+					runStat.updateStatOnConnection(resourceMap, iterateId, 0, 0, "films1");
 				}
 
 				int tos_count_tExtractJSONFields_1 = 0;
@@ -2159,14 +2193,14 @@ public class call_api implements TalendJob {
 
 				// for output
 
-				appelapi1 = new appelapi1Struct();
+				films1 = new films1Struct();
 				if (errorResponse_tREST_1 != null) {
-					appelapi1.ERROR_CODE = errorResponse_tREST_1.getStatus();
-					if (appelapi1.ERROR_CODE != 204) {
-						appelapi1.Body = errorResponse_tREST_1.getEntity(String.class);
+					films1.ERROR_CODE = errorResponse_tREST_1.getStatus();
+					if (films1.ERROR_CODE != 204) {
+						films1.Body = errorResponse_tREST_1.getEntity(String.class);
 					}
 				} else {
-					appelapi1.Body = restResponse_tREST_1;
+					films1.Body = restResponse_tREST_1;
 				}
 
 				/**
@@ -2204,15 +2238,15 @@ public class call_api implements TalendJob {
 				if (execStat) {
 					runStat.updateStatOnConnection(iterateId, 1, 1
 
-							, "appelapi1"
+							, "films1"
 
 					);
 				}
 
-				if (appelapi1.Body != null) {// C_01
-					jsonStr_tExtractJSONFields_1 = appelapi1.Body.toString();
+				if (films1.Body != null) {// C_01
+					jsonStr_tExtractJSONFields_1 = films1.Body.toString();
 
-					row2 = null;
+					films2 = null;
 
 					String loopPath_tExtractJSONFields_1 = "$.results[*]";
 					java.util.List<Object> resultset_tExtractJSONFields_1 = new java.util.ArrayList<Object>();
@@ -2250,8 +2284,8 @@ public class call_api implements TalendJob {
 						if (!isStructError_tExtractJSONFields_1) {
 							Object row_tExtractJSONFields_1 = resultset_tExtractJSONFields_1
 									.get(i_tExtractJSONFields_1);
-							row2 = null;
-							row2 = new row2Struct();
+							films2 = null;
+							films2 = new films2Struct();
 							nb_line_tExtractJSONFields_1++;
 							try {
 								jsonPath_tExtractJSONFields_1 = "id";
@@ -2263,7 +2297,7 @@ public class call_api implements TalendJob {
 									value_tExtractJSONFields_1 = compiledJsonPath_tExtractJSONFields_1
 											.read(row_tExtractJSONFields_1);
 
-									row2.id = value_tExtractJSONFields_1 == null ?
+									films2.id = value_tExtractJSONFields_1 == null ?
 
 											null
 
@@ -2271,7 +2305,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.id =
+									films2.id =
 
 											null
 
@@ -2286,7 +2320,7 @@ public class call_api implements TalendJob {
 									value_tExtractJSONFields_1 = compiledJsonPath_tExtractJSONFields_1
 											.read(row_tExtractJSONFields_1);
 
-									row2.title = value_tExtractJSONFields_1 == null ?
+									films2.title = value_tExtractJSONFields_1 == null ?
 
 											null
 
@@ -2294,7 +2328,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.title =
+									films2.title =
 
 											null
 
@@ -2309,7 +2343,7 @@ public class call_api implements TalendJob {
 									value_tExtractJSONFields_1 = compiledJsonPath_tExtractJSONFields_1
 											.read(row_tExtractJSONFields_1);
 
-									row2.original_title = value_tExtractJSONFields_1 == null ?
+									films2.original_title = value_tExtractJSONFields_1 == null ?
 
 											null
 
@@ -2317,7 +2351,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.original_title =
+									films2.original_title =
 
 											null
 
@@ -2332,7 +2366,7 @@ public class call_api implements TalendJob {
 									value_tExtractJSONFields_1 = compiledJsonPath_tExtractJSONFields_1
 											.read(row_tExtractJSONFields_1);
 
-									row2.release_date = value_tExtractJSONFields_1 == null ?
+									films2.release_date = value_tExtractJSONFields_1 == null ?
 
 											null
 
@@ -2340,7 +2374,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.release_date =
+									films2.release_date =
 
 											null
 
@@ -2355,7 +2389,7 @@ public class call_api implements TalendJob {
 									value_tExtractJSONFields_1 = compiledJsonPath_tExtractJSONFields_1
 											.read(row_tExtractJSONFields_1);
 
-									row2.original_language = value_tExtractJSONFields_1 == null ?
+									films2.original_language = value_tExtractJSONFields_1 == null ?
 
 											null
 
@@ -2363,7 +2397,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.original_language =
+									films2.original_language =
 
 											null
 
@@ -2378,7 +2412,7 @@ public class call_api implements TalendJob {
 									value_tExtractJSONFields_1 = compiledJsonPath_tExtractJSONFields_1
 											.read(row_tExtractJSONFields_1);
 
-									row2.genre_ids = value_tExtractJSONFields_1 == null ?
+									films2.genre_ids = value_tExtractJSONFields_1 == null ?
 
 											null
 
@@ -2386,7 +2420,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.genre_ids =
+									films2.genre_ids =
 
 											null
 
@@ -2401,7 +2435,7 @@ public class call_api implements TalendJob {
 									value_tExtractJSONFields_1 = compiledJsonPath_tExtractJSONFields_1
 											.read(row_tExtractJSONFields_1);
 
-									row2.overview = value_tExtractJSONFields_1 == null ?
+									films2.overview = value_tExtractJSONFields_1 == null ?
 
 											null
 
@@ -2409,7 +2443,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.overview =
+									films2.overview =
 
 											null
 
@@ -2426,9 +2460,10 @@ public class call_api implements TalendJob {
 
 									if (value_tExtractJSONFields_1 != null
 											&& !value_tExtractJSONFields_1.toString().isEmpty()) {
-										row2.adult = ParserUtils.parseTo_Boolean(value_tExtractJSONFields_1.toString());
+										films2.adult = ParserUtils
+												.parseTo_Boolean(value_tExtractJSONFields_1.toString());
 									} else {
-										row2.adult =
+										films2.adult =
 
 												null
 
@@ -2437,7 +2472,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.adult =
+									films2.adult =
 
 											null
 
@@ -2452,7 +2487,7 @@ public class call_api implements TalendJob {
 									value_tExtractJSONFields_1 = compiledJsonPath_tExtractJSONFields_1
 											.read(row_tExtractJSONFields_1);
 
-									row2.poster_path = value_tExtractJSONFields_1 == null ?
+									films2.poster_path = value_tExtractJSONFields_1 == null ?
 
 											null
 
@@ -2460,7 +2495,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.poster_path =
+									films2.poster_path =
 
 											null
 
@@ -2477,10 +2512,10 @@ public class call_api implements TalendJob {
 
 									if (value_tExtractJSONFields_1 != null
 											&& !value_tExtractJSONFields_1.toString().isEmpty()) {
-										row2.vote_average = ParserUtils
+										films2.vote_average = ParserUtils
 												.parseTo_Float(value_tExtractJSONFields_1.toString());
 									} else {
-										row2.vote_average =
+										films2.vote_average =
 
 												null
 
@@ -2489,7 +2524,7 @@ public class call_api implements TalendJob {
 								} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_1) {
 									globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 											e_tExtractJSONFields_1.getMessage());
-									row2.vote_average =
+									films2.vote_average =
 
 											null
 
@@ -2499,7 +2534,7 @@ public class call_api implements TalendJob {
 								globalMap.put("tExtractJSONFields_1_ERROR_MESSAGE",
 										ex_tExtractJSONFields_1.getMessage());
 								System.err.println(ex_tExtractJSONFields_1.getMessage());
-								row2 = null;
+								films2 = null;
 							}
 
 						}
@@ -2523,8 +2558,8 @@ public class call_api implements TalendJob {
 						/**
 						 * [tExtractJSONFields_1 process_data_begin ] stop
 						 */
-// Start of branch "row2"
-						if (row2 != null) {
+// Start of branch "films2"
+						if (films2 != null) {
 
 							/**
 							 * [tFlowToIterate_1 main ] start
@@ -2535,30 +2570,30 @@ public class call_api implements TalendJob {
 							if (execStat) {
 								runStat.updateStatOnConnection(iterateId, 1, 1
 
-										, "row2"
+										, "films2"
 
 								);
 							}
 
-							globalMap.put("row2.id", row2.id);
+							globalMap.put("films2.id", films2.id);
 
-							globalMap.put("row2.title", row2.title);
+							globalMap.put("films2.title", films2.title);
 
-							globalMap.put("row2.original_title", row2.original_title);
+							globalMap.put("films2.original_title", films2.original_title);
 
-							globalMap.put("row2.release_date", row2.release_date);
+							globalMap.put("films2.release_date", films2.release_date);
 
-							globalMap.put("row2.original_language", row2.original_language);
+							globalMap.put("films2.original_language", films2.original_language);
 
-							globalMap.put("row2.genre_ids", row2.genre_ids);
+							globalMap.put("films2.genre_ids", films2.genre_ids);
 
-							globalMap.put("row2.overview", row2.overview);
+							globalMap.put("films2.overview", films2.overview);
 
-							globalMap.put("row2.adult", row2.adult);
+							globalMap.put("films2.adult", films2.adult);
 
-							globalMap.put("row2.poster_path", row2.poster_path);
+							globalMap.put("films2.poster_path", films2.poster_path);
 
-							globalMap.put("row2.vote_average", row2.vote_average);
+							globalMap.put("films2.vote_average", films2.vote_average);
 
 							nb_line_tFlowToIterate_1++;
 							counter_tFlowToIterate_1++;
@@ -2582,11 +2617,11 @@ public class call_api implements TalendJob {
 							NB_ITERATE_tREST_2++;
 
 							if (execStat) {
-								runStat.updateStatOnConnection("row1", 3, 0);
+								runStat.updateStatOnConnection("film2", 3, 0);
 							}
 
 							if (execStat) {
-								runStat.updateStatOnConnection("row3", 3, 0);
+								runStat.updateStatOnConnection("film1", 3, 0);
 							}
 
 							if (execStat) {
@@ -2595,245 +2630,99 @@ public class call_api implements TalendJob {
 							}
 
 							/**
-							 * [tLogRow_1 begin ] start
+							 * [tFileOutputDelimited_1 begin ] start
 							 */
 
-							ok_Hash.put("tLogRow_1", false);
-							start_Hash.put("tLogRow_1", System.currentTimeMillis());
+							ok_Hash.put("tFileOutputDelimited_1", false);
+							start_Hash.put("tFileOutputDelimited_1", System.currentTimeMillis());
 
-							currentComponent = "tLogRow_1";
+							currentComponent = "tFileOutputDelimited_1";
 
 							if (execStat) {
-								runStat.updateStatOnConnection(resourceMap, iterateId, 0, 0, "row3");
+								runStat.updateStatOnConnection(resourceMap, iterateId, 0, 0, "film2");
 							}
 
-							int tos_count_tLogRow_1 = 0;
+							int tos_count_tFileOutputDelimited_1 = 0;
 
-							///////////////////////
-
-							class Util_tLogRow_1 {
-
-								String[] des_top = { ".", ".", "-", "+" };
-
-								String[] des_head = { "|=", "=|", "-", "+" };
-
-								String[] des_bottom = { "'", "'", "-", "+" };
-
-								String name = "";
-
-								java.util.List<String[]> list = new java.util.ArrayList<String[]>();
-
-								int[] colLengths = new int[15];
-
-								public void addRow(String[] row) {
-
-									for (int i = 0; i < 15; i++) {
-										if (row[i] != null) {
-											colLengths[i] = Math.max(colLengths[i], row[i].length());
-										}
-									}
-									list.add(row);
+							String fileName_tFileOutputDelimited_1 = "";
+							fileName_tFileOutputDelimited_1 = (new java.io.File(
+									"D:/Applications/TOS_DI-8.0.1/studio/workspace/FILM/_output/film_affiche.csv"))
+											.getAbsolutePath().replace("\\", "/");
+							String fullName_tFileOutputDelimited_1 = null;
+							String extension_tFileOutputDelimited_1 = null;
+							String directory_tFileOutputDelimited_1 = null;
+							if ((fileName_tFileOutputDelimited_1.indexOf("/") != -1)) {
+								if (fileName_tFileOutputDelimited_1.lastIndexOf(".") < fileName_tFileOutputDelimited_1
+										.lastIndexOf("/")) {
+									fullName_tFileOutputDelimited_1 = fileName_tFileOutputDelimited_1;
+									extension_tFileOutputDelimited_1 = "";
+								} else {
+									fullName_tFileOutputDelimited_1 = fileName_tFileOutputDelimited_1.substring(0,
+											fileName_tFileOutputDelimited_1.lastIndexOf("."));
+									extension_tFileOutputDelimited_1 = fileName_tFileOutputDelimited_1
+											.substring(fileName_tFileOutputDelimited_1.lastIndexOf("."));
 								}
-
-								public void setTableName(String name) {
-
-									this.name = name;
+								directory_tFileOutputDelimited_1 = fileName_tFileOutputDelimited_1.substring(0,
+										fileName_tFileOutputDelimited_1.lastIndexOf("/"));
+							} else {
+								if (fileName_tFileOutputDelimited_1.lastIndexOf(".") != -1) {
+									fullName_tFileOutputDelimited_1 = fileName_tFileOutputDelimited_1.substring(0,
+											fileName_tFileOutputDelimited_1.lastIndexOf("."));
+									extension_tFileOutputDelimited_1 = fileName_tFileOutputDelimited_1
+											.substring(fileName_tFileOutputDelimited_1.lastIndexOf("."));
+								} else {
+									fullName_tFileOutputDelimited_1 = fileName_tFileOutputDelimited_1;
+									extension_tFileOutputDelimited_1 = "";
 								}
+								directory_tFileOutputDelimited_1 = "";
+							}
+							boolean isFileGenerated_tFileOutputDelimited_1 = true;
+							java.io.File filetFileOutputDelimited_1 = new java.io.File(fileName_tFileOutputDelimited_1);
+							globalMap.put("tFileOutputDelimited_1_FILE_NAME", fileName_tFileOutputDelimited_1);
+							if (filetFileOutputDelimited_1.exists()) {
+								isFileGenerated_tFileOutputDelimited_1 = false;
+							}
+							int nb_line_tFileOutputDelimited_1 = 0;
+							int splitedFileNo_tFileOutputDelimited_1 = 0;
+							int currentRow_tFileOutputDelimited_1 = 0;
 
-								public StringBuilder format() {
+							final String OUT_DELIM_tFileOutputDelimited_1 = /**
+																			 * Start field
+																			 * tFileOutputDelimited_1:FIELDSEPARATOR
+																			 */
+									";"/** End field tFileOutputDelimited_1:FIELDSEPARATOR */
+							;
 
-									StringBuilder sb = new StringBuilder();
+							final String OUT_DELIM_ROWSEP_tFileOutputDelimited_1 = /**
+																					 * Start field
+																					 * tFileOutputDelimited_1:ROWSEPARATOR
+																					 */
+									"\n"/** End field tFileOutputDelimited_1:ROWSEPARATOR */
+							;
 
-									sb.append(print(des_top));
-
-									int totals = 0;
-									for (int i = 0; i < colLengths.length; i++) {
-										totals = totals + colLengths[i];
-									}
-
-									// name
-									sb.append("|");
-									int k = 0;
-									for (k = 0; k < (totals + 14 - name.length()) / 2; k++) {
-										sb.append(' ');
-									}
-									sb.append(name);
-									for (int i = 0; i < totals + 14 - name.length() - k; i++) {
-										sb.append(' ');
-									}
-									sb.append("|\n");
-
-									// head and rows
-									sb.append(print(des_head));
-									for (int i = 0; i < list.size(); i++) {
-
-										String[] row = list.get(i);
-
-										java.util.Formatter formatter = new java.util.Formatter(new StringBuilder());
-
-										StringBuilder sbformat = new StringBuilder();
-										sbformat.append("|%1$-");
-										sbformat.append(colLengths[0]);
-										sbformat.append("s");
-
-										sbformat.append("|%2$-");
-										sbformat.append(colLengths[1]);
-										sbformat.append("s");
-
-										sbformat.append("|%3$-");
-										sbformat.append(colLengths[2]);
-										sbformat.append("s");
-
-										sbformat.append("|%4$-");
-										sbformat.append(colLengths[3]);
-										sbformat.append("s");
-
-										sbformat.append("|%5$-");
-										sbformat.append(colLengths[4]);
-										sbformat.append("s");
-
-										sbformat.append("|%6$-");
-										sbformat.append(colLengths[5]);
-										sbformat.append("s");
-
-										sbformat.append("|%7$-");
-										sbformat.append(colLengths[6]);
-										sbformat.append("s");
-
-										sbformat.append("|%8$-");
-										sbformat.append(colLengths[7]);
-										sbformat.append("s");
-
-										sbformat.append("|%9$-");
-										sbformat.append(colLengths[8]);
-										sbformat.append("s");
-
-										sbformat.append("|%10$-");
-										sbformat.append(colLengths[9]);
-										sbformat.append("s");
-
-										sbformat.append("|%11$-");
-										sbformat.append(colLengths[10]);
-										sbformat.append("s");
-
-										sbformat.append("|%12$-");
-										sbformat.append(colLengths[11]);
-										sbformat.append("s");
-
-										sbformat.append("|%13$-");
-										sbformat.append(colLengths[12]);
-										sbformat.append("s");
-
-										sbformat.append("|%14$-");
-										sbformat.append(colLengths[13]);
-										sbformat.append("s");
-
-										sbformat.append("|%15$-");
-										sbformat.append(colLengths[14]);
-										sbformat.append("s");
-
-										sbformat.append("|\n");
-
-										formatter.format(sbformat.toString(), (Object[]) row);
-
-										sb.append(formatter.toString());
-										if (i == 0)
-											sb.append(print(des_head)); // print the head
-									}
-
-									// end
-									sb.append(print(des_bottom));
-									return sb;
-								}
-
-								private StringBuilder print(String[] fillChars) {
-									StringBuilder sb = new StringBuilder();
-									// first column
-									sb.append(fillChars[0]);
-									for (int i = 0; i < colLengths[0] - fillChars[0].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-
-									for (int i = 0; i < colLengths[1] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[2] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[3] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[4] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[5] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[6] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[7] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[8] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[9] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[10] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[11] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[12] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-									for (int i = 0; i < colLengths[13] - fillChars[3].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[3]);
-
-									// last column
-									for (int i = 0; i < colLengths[14] - fillChars[1].length() + 1; i++) {
-										sb.append(fillChars[2]);
-									}
-									sb.append(fillChars[1]);
-									sb.append("\n");
-									return sb;
-								}
-
-								public boolean isTableEmpty() {
-									if (list.size() > 1)
-										return false;
-									return true;
+							// create directory only if not exists
+							if (directory_tFileOutputDelimited_1 != null
+									&& directory_tFileOutputDelimited_1.trim().length() != 0) {
+								java.io.File dir_tFileOutputDelimited_1 = new java.io.File(
+										directory_tFileOutputDelimited_1);
+								if (!dir_tFileOutputDelimited_1.exists()) {
+									dir_tFileOutputDelimited_1.mkdirs();
 								}
 							}
-							Util_tLogRow_1 util_tLogRow_1 = new Util_tLogRow_1();
-							util_tLogRow_1.setTableName("tLogRow_1");
-							util_tLogRow_1.addRow(new String[] { "id", "budget", "genres", "original_language",
-									"original_title", "title", "overview", "poster_path", "production_companies",
-									"release_date", "revenue", "runtime", "vote_average", "vote_count", "tagline", });
-							StringBuilder strBuffer_tLogRow_1 = null;
-							int nb_line_tLogRow_1 = 0;
-///////////////////////    			
+
+							// routines.system.Row
+							java.io.Writer outtFileOutputDelimited_1 = null;
+
+							outtFileOutputDelimited_1 = new routines.system.BufferedOutput(
+									new java.io.OutputStreamWriter(
+											new java.io.FileOutputStream(fileName_tFileOutputDelimited_1, true),
+											"UTF-8"));
+
+							resourceMap.put("out_tFileOutputDelimited_1", outtFileOutputDelimited_1);
+							resourceMap.put("nb_line_tFileOutputDelimited_1", nb_line_tFileOutputDelimited_1);
 
 							/**
-							 * [tLogRow_1 begin ] stop
+							 * [tFileOutputDelimited_1 begin ] stop
 							 */
 
 							/**
@@ -2846,7 +2735,7 @@ public class call_api implements TalendJob {
 							currentComponent = "tExtractJSONFields_2";
 
 							if (execStat) {
-								runStat.updateStatOnConnection(resourceMap, iterateId, 0, 0, "row1");
+								runStat.updateStatOnConnection(resourceMap, iterateId, 0, 0, "film1");
 							}
 
 							int tos_count_tExtractJSONFields_2 = 0;
@@ -2886,7 +2775,7 @@ public class call_api implements TalendJob {
 
 							int tos_count_tREST_2 = 0;
 
-							String endpoint_tREST_2 = "https://api.themoviedb.org/3/movie/" + globalMap.get("row2.id")
+							String endpoint_tREST_2 = "https://api.themoviedb.org/3/movie/" + globalMap.get("films2.id")
 									+ "?language=fr-FR";
 
 							String trustStoreFile_tREST_2 = System.getProperty("javax.net.ssl.trustStore");
@@ -2991,14 +2880,14 @@ public class call_api implements TalendJob {
 
 							// for output
 
-							row1 = new row1Struct();
+							film1 = new film1Struct();
 							if (errorResponse_tREST_2 != null) {
-								row1.ERROR_CODE = errorResponse_tREST_2.getStatus();
-								if (row1.ERROR_CODE != 204) {
-									row1.Body = errorResponse_tREST_2.getEntity(String.class);
+								film1.ERROR_CODE = errorResponse_tREST_2.getStatus();
+								if (film1.ERROR_CODE != 204) {
+									film1.Body = errorResponse_tREST_2.getEntity(String.class);
 								}
 							} else {
-								row1.Body = restResponse_tREST_2;
+								film1.Body = restResponse_tREST_2;
 							}
 
 							/**
@@ -3036,15 +2925,15 @@ public class call_api implements TalendJob {
 							if (execStat) {
 								runStat.updateStatOnConnection(iterateId, 1, 1
 
-										, "row1"
+										, "film1"
 
 								);
 							}
 
-							if (row1.Body != null) {// C_01
-								jsonStr_tExtractJSONFields_2 = row1.Body.toString();
+							if (film1.Body != null) {// C_01
+								jsonStr_tExtractJSONFields_2 = film1.Body.toString();
 
-								row3 = null;
+								film2 = null;
 
 								String loopPath_tExtractJSONFields_2 = "$";
 								java.util.List<Object> resultset_tExtractJSONFields_2 = new java.util.ArrayList<Object>();
@@ -3083,8 +2972,8 @@ public class call_api implements TalendJob {
 									if (!isStructError_tExtractJSONFields_2) {
 										Object row_tExtractJSONFields_2 = resultset_tExtractJSONFields_2
 												.get(i_tExtractJSONFields_2);
-										row3 = null;
-										row3 = new row3Struct();
+										film2 = null;
+										film2 = new film2Struct();
 										nb_line_tExtractJSONFields_2++;
 										try {
 											jsonPath_tExtractJSONFields_2 = "id";
@@ -3096,7 +2985,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.id = value_tExtractJSONFields_2 == null ?
+												film2.id = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3104,7 +2993,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.id =
+												film2.id =
 
 														null
 
@@ -3119,7 +3008,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.budget = value_tExtractJSONFields_2 == null ?
+												film2.budget = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3127,7 +3016,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.budget =
+												film2.budget =
 
 														null
 
@@ -3142,7 +3031,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.genres = value_tExtractJSONFields_2 == null ?
+												film2.genres = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3150,7 +3039,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.genres =
+												film2.genres =
 
 														null
 
@@ -3165,7 +3054,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.original_language = value_tExtractJSONFields_2 == null ?
+												film2.original_language = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3173,7 +3062,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.original_language =
+												film2.original_language =
 
 														null
 
@@ -3188,7 +3077,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.original_title = value_tExtractJSONFields_2 == null ?
+												film2.original_title = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3196,7 +3085,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.original_title =
+												film2.original_title =
 
 														null
 
@@ -3211,7 +3100,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.title = value_tExtractJSONFields_2 == null ?
+												film2.title = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3219,7 +3108,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.title =
+												film2.title =
 
 														null
 
@@ -3234,7 +3123,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.overview = value_tExtractJSONFields_2 == null ?
+												film2.overview = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3242,7 +3131,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.overview =
+												film2.overview =
 
 														null
 
@@ -3257,7 +3146,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.poster_path = value_tExtractJSONFields_2 == null ?
+												film2.poster_path = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3265,7 +3154,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.poster_path =
+												film2.poster_path =
 
 														null
 
@@ -3280,7 +3169,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.production_companies = value_tExtractJSONFields_2 == null ?
+												film2.production_companies = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3288,7 +3177,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.production_companies =
+												film2.production_companies =
 
 														null
 
@@ -3303,7 +3192,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.release_date = value_tExtractJSONFields_2 == null ?
+												film2.release_date = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3311,7 +3200,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.release_date =
+												film2.release_date =
 
 														null
 
@@ -3326,7 +3215,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.revenue = value_tExtractJSONFields_2 == null ?
+												film2.revenue = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3334,7 +3223,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.revenue =
+												film2.revenue =
 
 														null
 
@@ -3349,7 +3238,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.runtime = value_tExtractJSONFields_2 == null ?
+												film2.runtime = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3357,7 +3246,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.runtime =
+												film2.runtime =
 
 														null
 
@@ -3372,7 +3261,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.vote_average = value_tExtractJSONFields_2 == null ?
+												film2.vote_average = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3380,7 +3269,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.vote_average =
+												film2.vote_average =
 
 														null
 
@@ -3395,7 +3284,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.vote_count = value_tExtractJSONFields_2 == null ?
+												film2.vote_count = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3403,7 +3292,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.vote_count =
+												film2.vote_count =
 
 														null
 
@@ -3418,7 +3307,7 @@ public class call_api implements TalendJob {
 												value_tExtractJSONFields_2 = compiledJsonPath_tExtractJSONFields_2
 														.read(row_tExtractJSONFields_2);
 
-												row3.tagline = value_tExtractJSONFields_2 == null ?
+												film2.tagline = value_tExtractJSONFields_2 == null ?
 
 														null
 
@@ -3426,7 +3315,7 @@ public class call_api implements TalendJob {
 											} catch (com.jayway.jsonpath.PathNotFoundException e_tExtractJSONFields_2) {
 												globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 														e_tExtractJSONFields_2.getMessage());
-												row3.tagline =
+												film2.tagline =
 
 														null
 
@@ -3436,7 +3325,7 @@ public class call_api implements TalendJob {
 											globalMap.put("tExtractJSONFields_2_ERROR_MESSAGE",
 													ex_tExtractJSONFields_2.getMessage());
 											System.err.println(ex_tExtractJSONFields_2.getMessage());
-											row3 = null;
+											film2 = null;
 										}
 
 									}
@@ -3460,137 +3349,118 @@ public class call_api implements TalendJob {
 									/**
 									 * [tExtractJSONFields_2 process_data_begin ] stop
 									 */
-// Start of branch "row3"
-									if (row3 != null) {
+// Start of branch "film2"
+									if (film2 != null) {
 
 										/**
-										 * [tLogRow_1 main ] start
+										 * [tFileOutputDelimited_1 main ] start
 										 */
 
-										currentComponent = "tLogRow_1";
+										currentComponent = "tFileOutputDelimited_1";
 
 										if (execStat) {
 											runStat.updateStatOnConnection(iterateId, 1, 1
 
-													, "row3"
+													, "film2"
 
 											);
 										}
 
-///////////////////////		
+										StringBuilder sb_tFileOutputDelimited_1 = new StringBuilder();
+										if (film2.id != null) {
+											sb_tFileOutputDelimited_1.append(film2.id);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.budget != null) {
+											sb_tFileOutputDelimited_1.append(film2.budget);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.genres != null) {
+											sb_tFileOutputDelimited_1.append(film2.genres);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.original_language != null) {
+											sb_tFileOutputDelimited_1.append(film2.original_language);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.original_title != null) {
+											sb_tFileOutputDelimited_1.append(film2.original_title);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.title != null) {
+											sb_tFileOutputDelimited_1.append(film2.title);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.overview != null) {
+											sb_tFileOutputDelimited_1.append(film2.overview);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.poster_path != null) {
+											sb_tFileOutputDelimited_1.append(film2.poster_path);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.production_companies != null) {
+											sb_tFileOutputDelimited_1.append(film2.production_companies);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.release_date != null) {
+											sb_tFileOutputDelimited_1.append(film2.release_date);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.revenue != null) {
+											sb_tFileOutputDelimited_1.append(film2.revenue);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.runtime != null) {
+											sb_tFileOutputDelimited_1.append(film2.runtime);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.vote_average != null) {
+											sb_tFileOutputDelimited_1.append(film2.vote_average);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.vote_count != null) {
+											sb_tFileOutputDelimited_1.append(film2.vote_count);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_tFileOutputDelimited_1);
+										if (film2.tagline != null) {
+											sb_tFileOutputDelimited_1.append(film2.tagline);
+										}
+										sb_tFileOutputDelimited_1.append(OUT_DELIM_ROWSEP_tFileOutputDelimited_1);
 
-										String[] row_tLogRow_1 = new String[15];
+										nb_line_tFileOutputDelimited_1++;
+										resourceMap.put("nb_line_tFileOutputDelimited_1",
+												nb_line_tFileOutputDelimited_1);
 
-										if (row3.id != null) { //
-											row_tLogRow_1[0] = String.valueOf(row3.id);
+										outtFileOutputDelimited_1.write(sb_tFileOutputDelimited_1.toString());
 
-										} //
-
-										if (row3.budget != null) { //
-											row_tLogRow_1[1] = String.valueOf(row3.budget);
-
-										} //
-
-										if (row3.genres != null) { //
-											row_tLogRow_1[2] = String.valueOf(row3.genres);
-
-										} //
-
-										if (row3.original_language != null) { //
-											row_tLogRow_1[3] = String.valueOf(row3.original_language);
-
-										} //
-
-										if (row3.original_title != null) { //
-											row_tLogRow_1[4] = String.valueOf(row3.original_title);
-
-										} //
-
-										if (row3.title != null) { //
-											row_tLogRow_1[5] = String.valueOf(row3.title);
-
-										} //
-
-										if (row3.overview != null) { //
-											row_tLogRow_1[6] = String.valueOf(row3.overview);
-
-										} //
-
-										if (row3.poster_path != null) { //
-											row_tLogRow_1[7] = String.valueOf(row3.poster_path);
-
-										} //
-
-										if (row3.production_companies != null) { //
-											row_tLogRow_1[8] = String.valueOf(row3.production_companies);
-
-										} //
-
-										if (row3.release_date != null) { //
-											row_tLogRow_1[9] = String.valueOf(row3.release_date);
-
-										} //
-
-										if (row3.revenue != null) { //
-											row_tLogRow_1[10] = String.valueOf(row3.revenue);
-
-										} //
-
-										if (row3.runtime != null) { //
-											row_tLogRow_1[11] = String.valueOf(row3.runtime);
-
-										} //
-
-										if (row3.vote_average != null) { //
-											row_tLogRow_1[12] = String.valueOf(row3.vote_average);
-
-										} //
-
-										if (row3.vote_count != null) { //
-											row_tLogRow_1[13] = String.valueOf(row3.vote_count);
-
-										} //
-
-										if (row3.tagline != null) { //
-											row_tLogRow_1[14] = String.valueOf(row3.tagline);
-
-										} //
-
-										util_tLogRow_1.addRow(row_tLogRow_1);
-										nb_line_tLogRow_1++;
-//////
-
-//////                    
-
-///////////////////////    			
-
-										tos_count_tLogRow_1++;
+										tos_count_tFileOutputDelimited_1++;
 
 										/**
-										 * [tLogRow_1 main ] stop
+										 * [tFileOutputDelimited_1 main ] stop
 										 */
 
 										/**
-										 * [tLogRow_1 process_data_begin ] start
+										 * [tFileOutputDelimited_1 process_data_begin ] start
 										 */
 
-										currentComponent = "tLogRow_1";
+										currentComponent = "tFileOutputDelimited_1";
 
 										/**
-										 * [tLogRow_1 process_data_begin ] stop
+										 * [tFileOutputDelimited_1 process_data_begin ] stop
 										 */
 
 										/**
-										 * [tLogRow_1 process_data_end ] start
+										 * [tFileOutputDelimited_1 process_data_end ] start
 										 */
 
-										currentComponent = "tLogRow_1";
+										currentComponent = "tFileOutputDelimited_1";
 
 										/**
-										 * [tLogRow_1 process_data_end ] stop
+										 * [tFileOutputDelimited_1 process_data_end ] stop
 										 */
 
-									} // End of branch "row3"
+									} // End of branch "film2"
 
 									// end for
 								}
@@ -3639,7 +3509,7 @@ public class call_api implements TalendJob {
 							globalMap.put("tExtractJSONFields_1_NB_LINE", nb_line_tExtractJSONFields_2);
 
 							if (execStat) {
-								runStat.updateStat(resourceMap, iterateId, 2, 0, "row1");
+								runStat.updateStat(resourceMap, iterateId, 2, 0, "film1");
 							}
 
 							ok_Hash.put("tExtractJSONFields_2", true);
@@ -3650,38 +3520,30 @@ public class call_api implements TalendJob {
 							 */
 
 							/**
-							 * [tLogRow_1 end ] start
+							 * [tFileOutputDelimited_1 end ] start
 							 */
 
-							currentComponent = "tLogRow_1";
+							currentComponent = "tFileOutputDelimited_1";
 
-//////
-
-							java.io.PrintStream consoleOut_tLogRow_1 = null;
-							if (globalMap.get("tLogRow_CONSOLE") != null) {
-								consoleOut_tLogRow_1 = (java.io.PrintStream) globalMap.get("tLogRow_CONSOLE");
-							} else {
-								consoleOut_tLogRow_1 = new java.io.PrintStream(
-										new java.io.BufferedOutputStream(System.out));
-								globalMap.put("tLogRow_CONSOLE", consoleOut_tLogRow_1);
+							if (outtFileOutputDelimited_1 != null) {
+								outtFileOutputDelimited_1.flush();
+								outtFileOutputDelimited_1.close();
 							}
 
-							consoleOut_tLogRow_1.println(util_tLogRow_1.format().toString());
-							consoleOut_tLogRow_1.flush();
-//////
-							globalMap.put("tLogRow_1_NB_LINE", nb_line_tLogRow_1);
+							globalMap.put("tFileOutputDelimited_1_NB_LINE", nb_line_tFileOutputDelimited_1);
+							globalMap.put("tFileOutputDelimited_1_FILE_NAME", fileName_tFileOutputDelimited_1);
 
-///////////////////////    			
+							resourceMap.put("finish_tFileOutputDelimited_1", true);
 
 							if (execStat) {
-								runStat.updateStat(resourceMap, iterateId, 2, 0, "row3");
+								runStat.updateStat(resourceMap, iterateId, 2, 0, "film2");
 							}
 
-							ok_Hash.put("tLogRow_1", true);
-							end_Hash.put("tLogRow_1", System.currentTimeMillis());
+							ok_Hash.put("tFileOutputDelimited_1", true);
+							end_Hash.put("tFileOutputDelimited_1", System.currentTimeMillis());
 
 							/**
-							 * [tLogRow_1 end ] stop
+							 * [tFileOutputDelimited_1 end ] stop
 							 */
 
 							if (execStat) {
@@ -3698,7 +3560,7 @@ public class call_api implements TalendJob {
 							 * [tFlowToIterate_1 process_data_end ] stop
 							 */
 
-						} // End of branch "row2"
+						} // End of branch "films2"
 
 						// end for
 					}
@@ -3747,7 +3609,7 @@ public class call_api implements TalendJob {
 				globalMap.put("tExtractJSONFields_1_NB_LINE", nb_line_tExtractJSONFields_1);
 
 				if (execStat) {
-					runStat.updateStat(resourceMap, iterateId, 2, 0, "appelapi1");
+					runStat.updateStat(resourceMap, iterateId, 2, 0, "films1");
 				}
 
 				ok_Hash.put("tExtractJSONFields_1", true);
@@ -3765,7 +3627,7 @@ public class call_api implements TalendJob {
 
 				globalMap.put("tFlowToIterate_1_NB_LINE", nb_line_tFlowToIterate_1);
 				if (execStat) {
-					runStat.updateStat(resourceMap, iterateId, 2, 0, "row2");
+					runStat.updateStat(resourceMap, iterateId, 2, 0, "films2");
 				}
 
 				ok_Hash.put("tFlowToIterate_1", true);
@@ -3842,13 +3704,24 @@ public class call_api implements TalendJob {
 				 */
 
 				/**
-				 * [tLogRow_1 finally ] start
+				 * [tFileOutputDelimited_1 finally ] start
 				 */
 
-				currentComponent = "tLogRow_1";
+				currentComponent = "tFileOutputDelimited_1";
+
+				if (resourceMap.get("finish_tFileOutputDelimited_1") == null) {
+
+					java.io.Writer outtFileOutputDelimited_1 = (java.io.Writer) resourceMap
+							.get("out_tFileOutputDelimited_1");
+					if (outtFileOutputDelimited_1 != null) {
+						outtFileOutputDelimited_1.flush();
+						outtFileOutputDelimited_1.close();
+					}
+
+				}
 
 				/**
-				 * [tLogRow_1 finally ] stop
+				 * [tFileOutputDelimited_1 finally ] stop
 				 */
 
 			} catch (java.lang.Exception e) {
@@ -4067,14 +3940,14 @@ public class call_api implements TalendJob {
 
 		try {
 			errorCode = null;
-			tREST_1Process(globalMap);
+			tFileDelete_1Process(globalMap);
 			if (!"failure".equals(status)) {
 				status = "end";
 			}
-		} catch (TalendException e_tREST_1) {
-			globalMap.put("tREST_1_SUBPROCESS_STATE", -1);
+		} catch (TalendException e_tFileDelete_1) {
+			globalMap.put("tFileDelete_1_SUBPROCESS_STATE", -1);
 
-			e_tREST_1.printStackTrace();
+			e_tFileDelete_1.printStackTrace();
 
 		}
 
@@ -4229,6 +4102,6 @@ public class call_api implements TalendJob {
 	ResumeUtil resumeUtil = null;
 }
 /************************************************************************************************
- * 124677 characters generated by Talend Open Studio for Data Integration on the
- * 24 janvier 2024, 09:49:57 CET
+ * 121788 characters generated by Talend Open Studio for Data Integration on the
+ * 24 janvier 2024, 11:17:14 CET
  ************************************************************************************************/
