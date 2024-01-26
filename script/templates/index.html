@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Films à l'Affiche</title>
   </head>
   <body>
     <h1>Films à l'Affiche</h1>
-    <div style="display: flex; flex-wrap: wrap">
+    <div class="movie-card">
       {% for film in films %}
-      <h1>{{film}}</h1>
       <div
         style="
           border: 1px solid #ddd;
