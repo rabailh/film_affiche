@@ -1,12 +1,16 @@
 from flask import Flask, render_template
 import pandas as pd
+import os
+
+# Obtenez le chemin absolu du répertoire actuel du script
+script_directory = os.path.dirname(os.path.abspath(__file__))
+# Construisez le chemin relatif vers le fichier CSV
+film_affiche_csv = os.path.join(script_directory, '../talend/_output/film_affiche.csv')
 
 app = Flask(__name__)
 
 # Charger le fichier CSV provenant de Talend
-film_affiche_csv = "../talend/_output/film_affiche.csv"
 df_talend = pd.read_csv(film_affiche_csv, sep=';')
-df_talend
 @app.route('/')
 def index():
     # Prendre les 5 premiers films du fichier CSV
