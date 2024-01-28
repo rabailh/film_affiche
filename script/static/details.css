@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
+}
+
+header {
+  background-color: #10243f;
+  color: #d2dbe9;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.details-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #d2dbe9;
+}
+
+.poster {
+  margin-right: 20px;
+  flex: 0 0 auto;
+}
+
+.poster img {
+  max-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.details {
+  flex: 1;
+}
+
+.more {
+  flex-basis: 200px;
+  flex-shrink: 0;
+}
+
+.details > * {
+  margin-bottom: 20px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.info {
+  margin-bottom: 20px;
+}
+
+.info p {
+  margin: 5px 0;
+}
+
+.overview {
+  margin-bottom: 20px;
+}
+
+.desc {
+  line-height: 1.5;
+}
+
+.other-info p {
+  margin: 5px 0;
+}
+
+.details .tags {
+  display: flex;
+  gap: 0.375em;
+  margin-bottom: 0.875em;
+  font-size: 0.85em;
+}
+
+.details .tags span {
+  padding: 0.35rem 0.65rem;
+  color: #3f3f3f;
+  border: 1.5px solid rgba(75, 75, 75, 0.4);
+  border-radius: 4px;
+  border-radius: 50px;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.more {
+  padding-left: 10px;
+  border-left: solid 1px rgb(73, 73, 73);
+  margin-left: 10px;
+}
+
+.more p {
+  margin: 10px;
+}
+
+.star-img {
+  filter: hue-rotate(345deg);
+}
+
+.btn-back {
+  overflow: hidden;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: solid 1px #d2dbe99d;
+}
+
+.text {
+  position: relative;
+  transition: 0.5s;
+}
+
+.btn-back:hover .text {
+  color: #10243f;
+}
+
+.btn-back:hover {
+  border: solid 1px #ffffff;
+}
+
+.btn-back::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 130%;
+  height: 55px;
+  background-color: #d2dbe9;
+  transform: translate(-110%, 0) skew(-30deg);
+  transition: 0.5s;
+}
+
+.btn-back:hover::before {
+  transform: translate(-5%, 0) skew(-15deg);
+}

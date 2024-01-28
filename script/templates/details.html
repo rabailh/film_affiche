@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../static/details.css" rel="stylesheet" />
+    <title>Détails du Film</title>
+  </head>
+  <body>
+    <header>
+      <h1>Films à l'affiche</h1>
+      <a class="btn-back" href="/"
+        ><span class="text"><strong>Retour</strong></span></a
+      >
+    </header>
+    <div class="details-container">
+      <div class="poster">
+        <img
+          src="https://image.tmdb.org/t/p/w780{{ film['poster_path'] }}"
+          alt="{{ film['title'] }}"
+        />
+      </div>
+      <div class="details">
+        <h1>{{ film['title'] }}</h1>
+        <p><strong>{{ film['tagline'] }}</strong></p>
+        <span class="italic"
+          >{{ film['original_title'] }} ({{ film['original_language'] }})</span
+        >
+        <br /><br />
+        <h2>
+          {{ film['release_date'].split('-')[0] }} • {{ film['runtime']//60}}h
+          {{ film['runtime']%60 }}min
+        </h2>
+        <div class="rating">
+          {% set rounded_vote_average = "{:.2f}".format(film['vote_average']/2)
+          %} {% for _ in range(5) %} {% if loop.index <=
+          rounded_vote_average|int %}
+          <img
+            src="../static/star-full.svg"
+            class="star-img"
+            width="20"
+            height="20"
+          />
+          {% else %}
+          <img
+            src="../static/star-empty.svg"
+            class="star-img"
+            width="20"
+            height="20"
+          />
+          {% endif %} {% endfor %}
+          <span> {{ rounded_vote_average }}/5</span>
+          <span> ({{ film['vote_count'] }})</span>
+        </div>
+        <br />
+        <div class="tags">
+          {% for genre in film['genres'] %}
+          <span class="tag">{{ genre }}</span>
+          {% endfor %}
+        </div>
+        <br />
+        <p class="desc">{{ film['overview'] }}</p>
+        <br />
+      </div>
+      <div class="more">
+        <p>
+          <strong>Production:</strong> <br />{{ film['production_companies'] }}
+        </p>
+        <p>
+          <strong>Sortie : </strong><br />
+          {{film['release_date']}}
+        </p>
+        <p>
+          <strong>Budget:</strong> <br />
+          ${{ '{:,.2f}'.format(film['budget']) }}
+        </p>
+        <p>
+          <strong>Recettes:</strong> <br />${{ '{:,.2f}'.format(film['revenue'])
+          }}
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

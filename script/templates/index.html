@@ -10,42 +10,33 @@
     <header>
       <h1>Films à l'affiche</h1>
     </header>
-
     <div class="wrapper">
       {% for film in films %}
       <div class="card">
+        <a href="/details/{{ film['id'] }}">
         <div class="poster">
           <img src="https://image.tmdb.org/t/p/w780{{ film['poster_path'] }}" alt="{{ film['title'] }}" />
         </div>
         <div class="details">
           <h1>{{ film['title'] }}</h1>
-
-          {# Année de sortie • heure et minutes de durée du film #}
           <h2>{{ film['release_date'].split('-')[0] }} • {{ film['runtime']//60}}h {{ film['runtime']%60 }}min</h2>
-
-          {# Note #}
           <div class="rating">
             {% set rounded_vote_average = "{:.2f}".format(film['vote_average']/2) %}
 
             {% for _ in range(5) %}
               {% if loop.index <= rounded_vote_average|int %}
-                <img src="static/star-full.svg" width="20" height="20" />
+                <img src="static/star-full.svg" class="star-img" width="20" height="20" />
               {% else %}
-                <img src="static/star-empty.svg" width="20" height="20" />
+                <img src="static/star-empty.svg" class="star-img" width="20" height="20" />
               {% endif %}
             {% endfor %}
-
             <span>{{ rounded_vote_average }}/5</span>
           </div>
-
-          {# Genres #}
           <div class="tags">
             {% for genre in film['genres'] %}
             <span class="tag">{{ genre }}</span>
             {% endfor %}
           </div>
-
-          {# Description #}
           <p class="desc">
             {% if film['overview'] | length > 300 %} 
               {{ film['overview'][:220] }}... 
@@ -53,7 +44,6 @@
               {{ film['overview'] }}
             {% endif %}
           </p>
-
         </div>
       </div>
       {% endfor %}
