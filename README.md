@@ -27,5 +27,4 @@ pip install flask pandas
 - Ouvrir Talend
 - Importer le projet depuis le dossier **talend** du projet
 - Exécuter le job **main**
-
-## Comprendre les jobs Talend
+- Voir la liste des films depuis l'url http://127.0.0.1:5000/

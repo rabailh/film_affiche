@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>Films à l'Affiche</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <title>Films à l'affiche</title>
   </head>
   <body>
-    <h1>Films à l'Affiche</h1>
-    <div class="movie-card">
+    <header>
+      <h1>Films à l'affiche</h1>
+    </header>
+
+    <div class="wrapper">
       {% for film in films %}
-      <div
-        style="
-          border: 1px solid #ddd;
-          padding: 10px;
-          margin: 10px;
-          width: 300px;
-        "
-      >
-        <h2>{{ film['title'] }}</h2>
-        <p><strong>Date de sortie:</strong> {{ film['release_date'] }}</p>
-        <p><strong>Vote moyen:</strong> {{ film['vote_average'] }}</p>
-        <img
-          src="{{ film['poster_path'] }}"
-          alt="{{ film['title'] }}"
-          style="max-width: 100%"
-        />
-        <p><strong>Vue d'ensemble:</strong> {{ film['overview'] }}</p>
+      <div class="card">
+        <div class="poster">
+          <img src="https://image.tmdb.org/t/p/w780{{ film['poster_path'] }}" alt="{{ film['title'] }}" />
+        </div>
+        <div class="details">
+          <h1>{{ film['title'] }}</h1>
+
+          {# Année de sortie • heure et minutes de durée du film #}
+          <h2>{{ film['release_date'].split('-')[0] }} • {{ film['runtime']//60}}h {{ film['runtime']%60 }}min</h2>
+
+          {# Note #}
+          <div class="rating">
+            {% set rounded_vote_average = "{:.2f}".format(film['vote_average']/2) %}
+
+            {% for _ in range(5) %}
+              {% if loop.index <= rounded_vote_average|int %}
+                <img src="static/star-full.svg" width="20" height="20" />
+              {% else %}
+                <img src="static/star-empty.svg" width="20" height="20" />
+              {% endif %}
+            {% endfor %}
+
+            <span>{{ rounded_vote_average }}/5</span>
+          </div>
+
+          {# Genres #}
+          <div class="tags">
+            {% for genre in film['genres'] %}
+            <span class="tag">{{ genre }}</span>
+            {% endfor %}
+          </div>
+
+          {# Description #}
+          <p class="desc">
+            {% if film['overview'] | length > 300 %} 
+              {{ film['overview'][:220] }}... 
+            {% else %}
+              {{ film['overview'] }}
+            {% endif %}
+          </p>
+
+        </div>
       </div>
       {% endfor %}
     </div>
