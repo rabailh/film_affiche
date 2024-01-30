@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import pandas as pd
 import os, json
 import re
+import webbrowser
 
 # Obtenez le chemin absolu du répertoire actuel du script
 script_directory = os.path.dirname(os.path.abspath(__file__))
@@ -36,4 +37,5 @@ def details(film_id):
     return render_template("details.html", film=film)
 
 if __name__ == '__main__':
+    webbrowser.open("http://127.0.0.1:5000")
     app.run(debug=True)
