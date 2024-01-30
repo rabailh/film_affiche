@@ -126,6 +126,8 @@ header {
 
 .star-img {
   filter: hue-rotate(345deg);
+  width: 20px;
+  height: 20px;
 }
 
 .btn-back {
@@ -144,6 +146,7 @@ header {
 .text {
   position: relative;
   transition: 0.5s;
+  font-weight: bold;
 }
 
 .btn-back:hover .text {
