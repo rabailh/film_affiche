@@ -188,4 +188,6 @@ body {
 
 .star-img {
   filter: hue-rotate(345deg);
+  width: 20px;
+  height: 20px;
 }
