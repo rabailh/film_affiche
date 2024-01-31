@@ -1,13 +1,13 @@
 # Film affiche
 
-## Présentation du projet
+## Présentation du projet et de la démarche
 
-Ce projet utilise Talend pour récupérer les id des films à l'affiche puis extrait des informations sur ces films, qui sont ensuite affichées dans une application web Flask sous forme de carte.
+De manière hebdomadaire, tous les mercredis, de nouvelles oeuvres cinématographiques font leurs apparitions au grand écran. Afin de pouvoir suivre la cadence et de ne pas louper les plus belles pépites, nous souhaitons pouvoir consulter les films à l'affiche et voir si ils valent le coup. C'est autour de cette idée que s'articule ce projet.
+L'idée générale est de récupérer des données venant d'une api opensource (TMDB) que l'on va ensuite intégrer grâce à des jobs dans Talend, pour ensuite les manipuler et les intégrer en tant qu'information dans notre application python conçue avec Flask.
 
-Sources de données (TMDB) :
+Sources de données (TMDB) : https://developer.themoviedb.org
 
-- Film à l'affiche : https://developer.themoviedb.org/reference/movie-now-playing-list
-- Détail d'un film : https://developer.themoviedb.org/reference/movie-details
+# Installation
 
 ## Prérequis
 
@@ -21,10 +21,23 @@ Avoir installé :
 ```bash
 pip install flask pandas
 ```
+## Importer le projet
 
-## Démarrer l'application avec Talend
+importer le projet dans le dossier de votre choix
+```bash
+git clone https://github.com/rabailh/film_affiche_.git
+```
 
+Comment démarrer l'application avec Talend :
 - Ouvrir Talend
 - Importer le projet depuis le dossier **talend** du projet
-- Exécuter le job **main**
-- Voir la liste des films depuis l'url http://127.0.0.1:5000/
+- Changer la variable de contexte du projet talend **filme_affiche_context.importedDirectory** en y insérant le chemin vers le dossier où à été importé le projet git.
+  La variable doit se finir par :
+  ```bash
+  /film_affiche_/
+  ```
+  
+- Autoriser talend à propager la modification dans tous les jobs
+- Exécuter le job **call_api**
+- Exécuter le job **call_script**
+- L'application devrait s'ouvrir sur le navigateur par défaut. L'application reste visitable même une fois close : *http://127.0.0.1:5000/*
