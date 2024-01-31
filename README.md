@@ -2,7 +2,7 @@
 
 ## Présentation du projet et de la démarche
 
-De manière hebdomadaire, tous les mercredis, de nouvelles oeuvres cinématographiques font leurs apparitions au grand écran. Afin de pouvoir suivre la cadence et de ne pas louper les plus belles pépites, nous souhaitons pouvoir consulter les films à l'affiche et voir si ils valent le coup. C'est autour de cette idée que s'articule ce projet.
+De manière hebdomadaire, tous les mercredis, de nouvelles oeuvres cinématographiques font leur apparition au grand écran. Afin de pouvoir suivre la cadence et de ne pas louper les plus belles pépites, nous souhaitons pouvoir consulter les films à l'affiche et voir si ils valent le coup. C'est autour de cette idée que s'articule ce projet.
 L'idée générale est de récupérer des données venant d'une api opensource (TMDB) que l'on va ensuite intégrer grâce à des jobs dans Talend, pour ensuite les manipuler et les intégrer en tant qu'information dans notre application python conçue avec Flask.
 
 Sources de données (TMDB) : https://developer.themoviedb.org
