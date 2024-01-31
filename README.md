@@ -11,9 +11,10 @@ Sources de données (TMDB) : https://developer.themoviedb.org
 
 ## Prérequis
 
-Avoir installé :
+Avoir :
 
 - Python
+- une variable d'environnement permettant l'éxécution d'un script python (ex : *python script.py*)
 - Talend Open Studio
 
 ## Installer les dépendances Python (flask et pandas)
