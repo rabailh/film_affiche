@@ -1,0 +1,11 @@
+{
+  "itemId" : "_AuTO0LXiEe6CqbiuqcKU9Q",
+  "contextList" : [ {
+    "contextName" : "Default",
+    "repoId" : "_dRZpkMBvEe6iwN3NvZZzfg",
+    "parameterList" : [ {
+      "id" : "_dTJ9EMBvEe6iwN3NvZZzfg",
+      "name" : "imported_directory"
+    } ]
+  } ]
+}

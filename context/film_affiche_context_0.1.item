@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:id="_dRbewMBvEe6iwN3NvZZzfg" confirmationNeeded="false" name="Default">
+  <contextParameter xmi:id="_dTJ9EMBvEe6iwN3NvZZzfg" comment="" name="imported_directory" prompt="imported_directory?" promptNeeded="false" repositoryContextId="built-in" type="id_Directory" value="D:/EPSI/I1/integration_de_donnees/film_affiche_/"/>
+</talendfile:ContextType>
