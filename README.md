@@ -14,7 +14,7 @@ Sources de données (TMDB) : https://developer.themoviedb.org
 Avoir :
 
 - Python
-- une variable d'environnement permettant l'éxécution d'un script python (ex : *python script.py*)
+- une variable d'environnement permettant l'éxécution d'un script python (*python script.py*). Si ce n'est pas "python" il y aura une erreur et le script ne s'éxécutera pas.
 - Talend Open Studio
 
 ## Installer les dépendances Python (flask et pandas)
