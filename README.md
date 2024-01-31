@@ -31,14 +31,12 @@ git clone https://github.com/rabailh/film_affiche_.git
 
 Comment démarrer l'application avec Talend :
 - Ouvrir Talend
-- Importer le projet depuis le dossier **talend** du projet
+- Importer le projet dans talend
 - Changer la variable de contexte du projet talend **filme_affiche_context.importedDirectory** en y insérant le chemin vers le dossier où à été importé le projet git.
   La variable doit se finir par :
   ```bash
   /film_affiche_/
   ```
-  
 - Autoriser talend à propager la modification dans tous les jobs
-- Exécuter le job **call_api**
-- Exécuter le job **call_script**
+- Exécuter le job **main**
 - L'application devrait s'ouvrir sur le navigateur par défaut. L'application reste visitable même une fois close : *http://127.0.0.1:5000/*
