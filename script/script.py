@@ -7,7 +7,7 @@ import webbrowser
 # Obtenez le chemin absolu du répertoire actuel du script
 script_directory = os.path.dirname(os.path.abspath(__file__))
 # Construisez le chemin relatif vers le fichier CSV
-film_affiche_csv = os.path.join(script_directory, '../talend/_output/film_affiche.csv')
+film_affiche_csv = os.path.join(script_directory, '../_output/film_affiche.csv')
 
 app = Flask(__name__)
 

@@ -5,7 +5,10 @@
 De manière hebdomadaire, tous les mercredis, de nouvelles oeuvres cinématographiques font leur apparition au grand écran. Afin de pouvoir suivre la cadence et de ne pas louper les plus belles pépites, nous souhaitons pouvoir consulter les films à l'affiche et voir si ils valent le coup. C'est autour de cette idée que s'articule ce projet.
 L'idée générale est de récupérer des données venant d'une api opensource (TMDB) que l'on va ensuite intégrer grâce à des jobs dans Talend, pour ensuite les manipuler et les intégrer en tant qu'information dans notre application python conçue avec Flask.
 
-Sources de données (TMDB) : https://developer.themoviedb.org
+Sources de données (TMDB) : https://developer.themoviedb.org :
+
+- Films à l'affiche (au cinéma) https://developer.themoviedb.org/reference/movie-now-playing-list
+- Détail d'un film : https://developer.themoviedb.org/reference/movie-details
 
 # Installation
 
@@ -14,7 +17,7 @@ Sources de données (TMDB) : https://developer.themoviedb.org
 Avoir :
 
 - Python
-- une variable d'environnement permettant l'éxécution d'un script python (*python script.py*). Si ce n'est pas "python" il y aura une erreur et le script ne s'éxécutera pas.
+- une variable d'environnement permettant l'éxécution d'un script python (_python script.py_). Si ce n'est pas "python" il y aura une erreur et le script ne s'éxécutera pas.
 - Talend Open Studio
 
 ## Installer les dépendances Python (flask et pandas)
@@ -22,21 +25,24 @@ Avoir :
 ```bash
 pip install flask pandas
 ```
+
 ## Importer le projet
 
 importer le projet dans le dossier de votre choix
+
 ```bash
 git clone https://github.com/rabailh/film_affiche_.git
 ```
 
 Comment démarrer l'application avec Talend :
+
 - Ouvrir Talend
-- Importer le projet dans talend
-- Changer la variable de contexte du projet talend **filme_affiche_context.importedDirectory** en y insérant le chemin vers le dossier où à été importé le projet git.
+- Importer le projet dans talend puis l'ouvrir
+- Changer la variable de contexte du projet talend (**filme_affiche_context.importedDirectory**) en y insérant le chemin vers le dossier où à été importé le projet git.
   La variable doit se finir par :
   ```bash
   /film_affiche_/
   ```
 - Autoriser talend à propager la modification dans tous les jobs
 - Exécuter le job **main**
-- L'application devrait s'ouvrir sur le navigateur par défaut. L'application reste visitable même une fois close : *http://127.0.0.1:5000/*
+- L'application devrait s'ouvrir sur le navigateur par défaut. L'application reste visitable même une fois close : http://127.0.0.1:5000/
